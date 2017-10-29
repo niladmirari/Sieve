@@ -1,0 +1,89 @@
+=pod
+use Sieve::URLlabels;
+my $u = new Sieve::URLlabels();
+   print Dumper $u->labels();
+
+=cut
+
+package Sieve::URLlabels; # version 1
+use Exporter;
+
+@ISA = qw(Exporter);
+@EXPORT = qw(new labels);
+
+
+use strict; use Data::Dumper;use utf8;
+sub new {
+  my $pkg = shift;
+  my $self; { my %hash; $self = bless(\%hash, $pkg); }
+  my $options = {};
+  $self->{sortkey} = shift;
+ return $self;
+}
+
+sub labels {
+   my $self = shift;
+
+  return [
+    {     
+       label =>   q{防具専用売買交換２} ,
+       url   =>  q{http://163.44.92.33/topics/1458} , # you need boke with ?page=number
+       file    =>   q{/home/ussr/Dropbox/Sieve/DB/Armer.yaml} ,
+    } ,
+
+    {     
+       label =>   q{スキル代行板（真アニマ専用）} ,
+       url   =>  q{http://163.44.92.33/topics/3084} , # you need boke with ?page=number
+       file    =>   q{/home/ussr/Dropbox/Sieve/DB/MakotoOP.yaml} ,
+    } ,
+
+    {     
+       label =>   q{スキル代行} ,
+       url   =>  q{http://163.44.92.33/topics/806} , # you need boke with ?page=number
+       file    =>   q{/home/ussr/Dropbox/Sieve/DB/NormalOP.yaml} ,
+    } ,
+
+
+
+    {     
+       label =>   q{上限進化代行} ,
+       url   =>  q{http://163.44.92.33/topics/2903} , # you need boke with ?page=number
+       file    =>   q{/home/ussr/Dropbox/Sieve/DB/Evolution.yaml} ,
+    } ,
+
+    {     
+       label =>   q{武器専用販売交換} ,
+       url   =>  q{http://163.44.92.33/topics/1255} , # you need boke with ?page=number
+       file    =>   q{/home/ussr/Dropbox/Sieve/DB/Weapon.yaml} ,
+    } ,
+
+
+    {     
+       label =>   q{トレ可コア専用交換所} ,
+       url   =>  q{http://163.44.92.33/topics/3220} , # you need boke with ?page=number
+       file    =>   q{/home/ussr/Dropbox/Sieve/DB/enableCores.yaml} ,
+    } ,
+
+    {     
+       label =>   q{アバターコレクション} ,
+       url   =>  q{http://163.44.92.33/topics/3319} , # you need boke with ?page=number
+       file    =>   q{/home/ussr/Dropbox/Sieve/DB/Avator.yaml} ,
+    } ,
+    {     
+       label =>   q{売買、交換はこちらで} ,
+       url   =>  q{http://163.44.92.33/topics/333} , # you need boke with ?page=number
+       file    =>   q{/home/ussr/Dropbox/Sieve/DB/Trading.yaml} ,
+    } ,
+    {     
+       label =>   q{継承用武器売買交換} ,
+       url   =>  q{http://163.44.92.33/topics/3138} , # you need boke with ?page=number
+       file    =>   q{/home/ussr/Dropbox/Sieve/DB/WeaponForInheritance.yaml} ,
+    } ,
+   ]
+
+}
+
+
+
+1;
+__END__

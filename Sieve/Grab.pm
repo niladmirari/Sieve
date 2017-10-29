@@ -1,0 +1,78 @@
+=pod
+use strict;
+use Sieve::Grab;
+
+use encoding 'utf-8';
+use Data::Dumper;
+{
+    package Data::Dumper;
+    sub qquote { return shift; }
+}
+$Data::Dumper::Useperl = 1;
+
+  my $g = new Sieve::Grab();
+  print Dumper  $g->get(q{http://163.44.92.33/topics/3084?page=1});
+
+#datas!!
+
+$VAR1 = {
+          'topics' => {
+                        'tags' => [],
+   (略
+                        'author_id' => '010500014f08a9f9',
+                        'comments' => [
+                                        {
+                                          'author_id' => '01010085509f1fe6',
+                                          'id' => 491072,
+                                          'message' => 求）2.0魔火　　出）スポ２,
+                                          'created_at' => '1508949262',
+                                          'comment_no' => 24877,
+                                          'author_name' => 紅蓮＠焔
+                                        },
+  
+=cut
+package Sieve::Grab; # version 1
+use Exporter;
+
+@ISA = qw(Exporter);
+@EXPORT = qw(new get);
+
+
+use strict;
+use warnings;
+use LWP::UserAgent;
+use JSON;
+use utf8;
+
+
+sub new {
+  my $pkg = shift;
+  my $self; { my %hash; $self = bless(\%hash, $pkg); }
+  my $options = {};
+  $self->{sortkey} = shift;
+ return $self;
+}
+
+sub get {
+   my $self = shift;
+   my $URL = shift;
+   my $return = "";
+# LWP::UserAgentのインスタンスを生成                                            
+my $ua = LWP::UserAgent->new;
+
+# LWP::UserAgentの「get」メソッドを使用                                         
+# 返り値はHTTP::Response                                                        
+my $response = $ua->get($URL);
+
+if ($response->is_success) {
+    my $html = $response->content;
+    $return = decode_json($html);
+} else {
+    die $response->status_line;
+}
+$return;
+}
+
+
+1;
+__END__
