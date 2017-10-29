@@ -1,0 +1,130 @@
+
+Phase )
+
+1)　Sieve Data Flow
+
+Scraping等で取得したデータ　　　
+  Grab  data   　　　　　                Arch data
+     o---------                 　　　　o--------------   ( 左に最新順にならんでいるとする
+
+2) Sieve
+  Grab  data                   　　　　　Arch data
+     (o---)<------>                 　　<o-------->----
+       <> でくくられた範囲が同じデータ であったとする 
+       ( )  が新しいデータ                           _DIFF_DATA
+
+3) Commit
+  Grab  data                   　　　　　Arch data
+     (o---)<------>                 　　(o---)<o-------->---------
+
+  _WRITE_DATA = diff ; diffby()
+  _WRITE_DATA = diff + Arch ; merge()
+  
+4)  Diet
+　Arch data                                      Ancient data
+   [o---------]{--------------}         o--------
+    isArchMetabolic = 1;
+    [] Reserved Arch
+    {} Ancient data
+ 
+         
+5)  Ancientize （　＾ω＾）・・・　これはけっきょく　item * old_item の検索を後ろにおくってるだけでいみはないのでやめ
+
+|  non-Search|                 Search                            |
+Grab      　  Arch data                  Ancient data
+ o           [o------------]            o--------{--------------} 
+    isArchMetabolic = 0;
+    {} Ancient data
+    [] Reserved Arch
+
+ Sievr::data
+   [
+     {chank},
+     {chank},
+  ]
+
+  # use encoding 'utf-8';
+  これをつかわないと適切に扱っていてもなぜか　wide charactor エラーがでる。
+  
+  # cron からnotifyをつかうときは　display 措定をしなければならない
+  system(qq{export DISPLAY=:0.0 && export XAUTHORITY=/home/ussr/.Xauthority &&  /usr/bin/notify-send -i /home/ussr/Dropbox/Sieve/system_icon/5.png  "$label $diffed"});
+  
+  # Sieveオブジェクトの大域変数がよくわからない　メソッドのなかの配列のリファレンスをわたしても
+  # データが保持されず　大域変数をつかっている　注意されたし
+  
+  こんなかんじ。
+
+     #ancientize 
+    
+     if ($s->isArchMetabolic() ) { # there are more than 100 items in ARCH
+     warn "Arch is big ill try remove Arch to Ancient data ... \n"; 
+          my $aGrab =$s->get_ancient() ;
+          my $as = new Sieve("id");
+           $as->loadArch($itrator->{file}."_Ancient");
+           my $this_diff = $as->diff($aGrab); # this make Write data = Diff data
+           if ( scalar @{$this_diff} > 0  ) { # get how many changed
+           $as->merge(); # this method will Write DATA = Diff + Arch  
+           $as->writeArch($itrator->{file}."_Ancient");
+           $as->writeReservedArch($itrator->{file});
+           } else {
+           print " there was no new data from Grab \n";
+        }
+     }
+     
+     
+   $バックアップのときの境界条件テストをしてない。次は行うように。
+   ancientize のテストコードをここにおく
+   
+   
+   use strict;
+use utf8;   use Data::Dumper; use warnings;
+use Sieve;   use YAML;
+
+  
+     my $s = new Sieve("id");
+     my $file =q{Armer.yaml};
+     $s->loadArch($file);
+
+     if ($s->isArchMetabolic() ) {
+     warn " big ill try remove Arch to Ancient data ... \n"; 
+          my $aGrab =$s->get_ancient() ;
+          my $as = new Sieve("id");
+           $as->loadArch("Ancient_" .$file);
+           my $this_diff = $as->diff($aGrab); # this make Write data = Diff data
+           if ( scalar @{$this_diff} > 0  ) { # get how many changed
+           $as->merge(); # this method will Write DATA = Diff + Arch  
+           $as->writeArch("Ancient_" .$file);
+           $as->writeReservedArch($file);
+           } else {
+           print " there was no new data from Grab \n";
+        }
+     }
+
+
+   
+
+
+
+
+
+
+
+   
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+

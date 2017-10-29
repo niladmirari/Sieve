@@ -1,0 +1,22 @@
+use strict;
+use utf8;   use Data::Dumper; use warnings;
+use Sieve;   use YAML;
+
+my $Grab= [
+ { name =>"jhon" , id => 30},
+ { name =>"shindy" , id => 34},
+ { name =>"tom" , id => 19},
+];
+  
+     my $s = new Sieve("id");
+     #$s->loadArch("test.yaml");
+     $s->loadArch("result.yaml");
+     my $this_diff = $s->diff($Grab); # this make Write data = Diff data
+     if ( scalar @{$this_diff} > 0  ) { # get how many changed
+        $s->merge(); # this method will Write DATA = Diff + Arch  
+        $s->writeArch("result.yaml");
+        print Dumper $this_diff;
+     } else {
+        print " there was no new data from Grab \n";
+     }
+

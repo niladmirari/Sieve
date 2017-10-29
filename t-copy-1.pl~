@@ -1,0 +1,50 @@
+
+use utf8; use warnings;
+use Sieve;use YAML;
+use Sieve::Grab;
+use Sieve::URLlabels;
+use strict;
+
+my $u = new Sieve::URLlabels();
+
+foreach my $itrator (@{$u->labels()}) {
+
+## initialaize only taking 10 pages
+#  for my $bigpage (1..10){
+#  	  my $page = 11 - $bigpage ;
+  my $page = 1;
+	
+  my $g = new Sieve::Grab();
+  my $Grab = $g->get($itrator->{url} . qq{?page=$page})->{topics}->{comments};
+
+  my $s = new Sieve("id");
+     $s->loadArch($itrator->{file});
+     my $this_diff = $s->diff($Grab); # this make Write data = Diff data
+     if ( scalar @{$this_diff} > 0  ) { # get how many changed
+        $s->merge(); # this method will Write DATA = Diff + Arch  
+        $s->writeArch($itrator->{file});
+       my $diffed =  YAML::Dump( myfilter ($this_diff));
+        my $label = $u->{label};
+        system(qq{kdialog --passivepopup '$label \n $diffed'}); 
+     } else {
+        print "  ----   there was no new data from Grab \n";
+        print YAML::Dump($itrator);
+     }
+     
+#  }# initial old pages data
+
+} #$u 
+
+
+sub myfilter {
+
+my $data = shift ; # [ {},{},....]
+ my @filter = (); 
+  foreach my $itr (@$data) {
+    my $itr_holder = {} ;
+     $itr_holder->{"author_name"} = $itr ->{"author_name"};
+     $itr_holder->{"message"} = $itr ->{"message"};
+   push @filter ,      $itr_holder; 
+  }
+return @filter;
+}

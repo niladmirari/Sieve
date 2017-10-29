@@ -1,0 +1,37 @@
+package Sieve::Data;
+use Exporter;
+
+@ISA = qw(Exporter);
+@EXPORT = qw(new show_parent);
+
+sub new {
+  my $pkg = shift;
+  my $self; { my %hash; $self = bless(\%hash, $pkg); }
+  my $options = {};
+  $self->{options} = $options;
+
+  $self->{_Grav} = [];
+  $self->{_Arch} = [];
+
+  my @required_options = qw /sub_category/;
+# set default parameters in options hash
+  %$options = (
+    parent_category => 'Linux'
+  );
+
+return $self;
+}
+
+
+sub show_parent {
+   my $self = shift;
+  my $options = $self->{options};
+
+  print "$options->{sub_category} is sub category of $options->{parent_category}\n";
+
+
+return ();
+}
+
+1;
+__END__
