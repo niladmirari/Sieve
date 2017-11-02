@@ -23,32 +23,32 @@ my $u = new Sieve::URLlabels();
 
 foreach my $itrator (@{$u->labels()}) {
 ## initialaize only taking 10 pages
-  #for my $bigpage (0..30){
-  #	  my $page = 31 - $bigpage ;
-  
-  sleep 2;
+  #for my $bigpage (0..60){
+ # 	  my $page = 61 - $bigpage ;
+  sleep 1;
   
   my $page = 1;
   my $g = new Sieve::Grab();
   my $Grab = $g->get($itrator->{url} . qq{?page=$page})->{topics}->{comments};
   
-  my $s = new Sieve("id");
+  my $s = new Sieve("comment_no");
      $s->loadArch($itrator->{file});
      my $this_diff = $s->diff($Grab); # this make Write data = Diff data
+     print YAML::Dump($itrator);
      
      if ( scalar @{$this_diff} > 0  ) { # get how many changed
         $s->merge(); # this method will Write DATA = Diff + Arch  
         $s->writeArch($itrator->{file});
         my $diffed =  YAML::Dump( myPrintFilter ($this_diff));
         my $label = $itrator->{label};
+        print "        (๑•̀ㅂ•́)و✧　↑　----   NEW DATA from Grab \n";
       
       $MSGBOX->send(  { title => "$label"  , message => "$diffed" , icon => "ruruha.png" });
-           
      } else {
-        print "  ----   there was no new data from Grab \n";
-        print YAML::Dump($itrator);
-     }    
-  #}# initial old pages data
+        print "        (((((((((((っ･ω･)っ ﾌﾞｰﾝ　↑　----   there was no new data from Grab \n";
+     }
+     
+ #}# initial old pages data
 } #$u
 
       $MSGBOX->send(  { title => "cron Sieve::Logress"  , message => "done" ,other_param => "-t 1"});
@@ -60,8 +60,10 @@ my $data = shift ; # [ {},{},....]
  my @filter = (); 
   foreach my $itr (@$data) {
     my $itr_holder = {} ;
+     $itr_holder->{"comment_no"} = $itr ->{"comment_no"};
      $itr_holder->{"name"} = $itr ->{"author_name"};
      $itr_holder->{">"} = $itr ->{"message"};
+     
    push @filter ,      $itr_holder; 
   }
 return @filter;
