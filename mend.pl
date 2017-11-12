@@ -40,23 +40,17 @@ use YAML::Syck;
          }
       }# foreach single YAML
 
-      if (0 and $tainted_flag) {         
-           print " i will remake correct data ☆（ゝω・）vｷｬﾋﾟ\n" ;
-           system (qq{cp $labels->{file} $labels->{file}_broken} . time);
-           system (qq{rm $labels->{file}});
-           YAML::Syck::DumpFile($labels->{file} ,\@cleanUP);
-      }
-      
+     
       # making report 
       
-      if ($cntCorrision == 0) {
+      if (0 and $cntCorrision == 0) {
            print "System data is all green score \n" ;
+      } else {
+      	   @cleanUP = sort {+$b->{"comment_no" } <=> +$a->{"comment_no" }} @cleanUP ;  
+                  YAML::Syck::DumpFile($labels->{file} ,\@cleanUP);
+      print " ------ matched ﾄﾞ━(ﾟДﾟ)━ﾝ!! \n";
       }
-      
-      
-      
- # YAML::Syck::DumpFile($labels->{file} ."_clean",\@cleanUP);  
-  #print " ------ matched ﾄﾞ━(ﾟДﾟ)━ﾝ!! \n";
+
   }# $labels
 
 

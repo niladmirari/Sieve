@@ -35,7 +35,7 @@ use Exporter;
 @EXPORT = qw(new set items sortby diffby merge);
 
 
-use strict; use Data::Dumper;use utf8;
+use strict; use Data::Dumper;  use encoding 'utf-8';
 sub new {
   my $pkg = shift;
   my $self; { my %hash; $self = bless(\%hash, $pkg); }
@@ -84,17 +84,23 @@ sub  diffby { # return DIFF
    # Grab : Arch = 1 : 2  
    my $GrabCount = scalar @$Grab ;
    my $ArchCount = scalar @$Arch ;
+
    my @compressArch = @$Arch;
-   if ($ArchCount > $GrabCount * 2 ) {#決め打ちでいいのか・・・？
-     @compressArch = @compressArch[0..$GrabCount * 2];  
+   
+   if ($ArchCount > $GrabCount * 5 ) {#決め打ちでいいのか・・・？
+     @compressArch = @compressArch[0..($GrabCount * 5 )];  #なにがおこってんだ ＊２　
+     #だと重複をゆるしてしまう Archの並び替えがこわれてるときにただしく作動しない まぁログレスだけきもい。
+     #コミュが高速で消される部分と　ずっと残る部分が人によって　ちがいがありすぎるため致し方のないバグであるらしい
    }
  
+   # die Dumper $compressArch[0],"\n";
    # check same value
-   my $cnt = {}; 
+   my $cnt = {};
 
    foreach my $Grabkey (@$Grab){ 
      $cnt->{$Grabkey->{$sortkey }} = 0;
    }
+   
    foreach my $Grabkey (@$Grab){
      foreach my $Archkey (@compressArch){
        if ( $Grabkey->{$sortkey } == $Archkey->{$sortkey})   {

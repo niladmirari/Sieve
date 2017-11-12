@@ -42,7 +42,7 @@ use strict;
 use warnings;
 use LWP::UserAgent;
 use JSON;
-use utf8;
+  use encoding 'utf-8';
 
 
 sub new {

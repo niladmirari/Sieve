@@ -33,53 +33,53 @@ sub labels {
     } ,
 
     {     
-       label =>   q{スキル代行板（真アニマ専用）} ,
+       label =>   q{スキル代行板（真アニマ専用）} ,#1
        url   =>  q{http://163.44.92.33/topics/3084} , # you need boke with ?page=number
        file    =>   q{/home/ussr/Dropbox/DB/Sieve/MakotoOP.yaml} ,
        db_table => q{MakotoOP},
     } ,
 
     {     
-       label =>   q{スキル代行} ,
+       label =>   q{スキル代行} ,#2
        url   =>  q{http://163.44.92.33/topics/806} , # you need boke with ?page=number
        file    =>   q{/home/ussr/Dropbox/DB/Sieve/NormalOP.yaml} ,
        db_table => q{NormalOP},
     } ,
 
     {     
-       label =>   q{上限進化代行} ,
+       label =>   q{上限進化代行} ,#3
        url   =>  q{http://163.44.92.33/topics/2903} , # you need boke with ?page=number
        file    =>   q{/home/ussr/Dropbox/DB/Sieve/Evolution.yaml} ,
        db_table => q{Evolution},
     } ,
 
     {     
-       label =>   q{武器専用販売交換} ,
+       label =>   q{武器専用販売交換} ,#4
        url   =>  q{http://163.44.92.33/topics/1255} , # you need boke with ?page=number
        file    =>   q{/home/ussr/Dropbox/DB/Sieve/Weapon.yaml} ,
        db_table => q{Weapon},
     } ,
     {     
-       label =>   q{トレ可コア専用交換所} ,
+       label =>   q{トレ可コア専用交換所} ,#5
        url   =>  q{http://163.44.92.33/topics/3220} , # you need boke with ?page=number
        file    =>   q{/home/ussr/Dropbox/DB/Sieve/enableCores.yaml} ,
        db_table => q{enableCores},
     } ,
 
     {     
-       label =>   q{アバターコレクション} ,
+       label =>   q{アバターコレクション} ,#6
        url   =>  q{http://163.44.92.33/topics/3319} , # you need boke with ?page=number
        file    =>   q{/home/ussr/Dropbox/DB/Sieve/Avator.yaml} ,
        db_table => q{Avator},
     } ,
     {     
-       label =>   q{売買、交換はこちらで} ,
+       label =>   q{売買、交換はこちらで} ,#7
        url   =>  q{http://163.44.92.33/topics/333} , # you need boke with ?page=number
        file    =>   q{/home/ussr/Dropbox/DB/Sieve/Trading.yaml} ,
        db_table => q{Trading},
     } ,
     {     
-       label =>   q{継承用武器売買交換} ,
+       label =>   q{継承用武器売買交換} ,#8
        url   =>  q{http://163.44.92.33/topics/3138} , # you need boke with ?page=number
        file    =>   q{/home/ussr/Dropbox/DB/Sieve/WeaponForInheritance.yaml} ,
        db_table => q{WeaponForInheritance},
